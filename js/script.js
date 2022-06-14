@@ -13,6 +13,7 @@
 
 // Chiedo al utente attraverso un prompt il livello di difficotà
 const userLevel = prompt('Inserisci un livello (1-2-3)');
+console.log(userLevel);
 
 // Definisco i vari range data dalla consegna 
 let rangeMaxNumber;
@@ -25,8 +26,10 @@ if(userLevel === '1') {
 }
 
 // Array di bombe
-let bombs = genBombs(16, 1, rangeMaxNumber);
-console.log(bombs); 
+const numBombs = 16
+let bombs = genBombs(numBombs, 1, rangeMaxNumber);
+console.log(bombs);
+
 // Genero 16 bombe del tutto casuali e li inserisco in una array ma non possono essere duplicati   
 function genBombs(numElements, rangeMin, rangeMax) {
 
@@ -42,6 +45,7 @@ function genBombs(numElements, rangeMin, rangeMax) {
         }
         
     }
+    
     return arrayBombs;
 }
 
@@ -51,11 +55,41 @@ function randomNumBomb(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
   }
 
-
+  
+// Definisco il massimo dei tentativi in ogni range che l'utente può tentare  
+// Se becca una bomba faccio terminare il gioco e gli comunico un messaggio che ha perso
 // Faccio continuare ad inserire un numero al utente finchè non becca una bomba e li inserisco in un array conteneti tutti i numeri che non sono bombe
-   // Se becca una bomba faccio terminare il gioco e gli comunico un messaggio che ha perso
-
-// Definisco il massimo dei tentativi in ogni range che l'utente può tentare 
-   // Se raggiunge il massimo dei tentativi nei rispettivi range termino il gioco e comunico un messaggio che ha vinto
-
+// Se raggiunge il massimo dei tentativi nei rispettivi range termino il gioco e comunico un messaggio che ha vinto
 // Quando termino il gioco comunico al utente il numero corrispettivo delle risposte corrrette ovvero quelle che non contenevano le bombe   
+   let maxChance = rangeMaxNumber - numBombs ; 
+
+   const notBombsNum = [];
+
+   let gameContinues = true;
+   while(gameContinues) {
+        const userNumber = parseInt(prompt('inserisci un numero'));
+
+        if (bombs.includes(userNumber)) {
+
+            gameContinues = false;
+            alert('hai perso. ' + 'Totale punteggio è ' + notBombsNum.length );
+            
+        } else {
+            if(!notBombsNum.includes(userNumber)){
+                notBombsNum.push(userNumber);
+
+            }
+
+            if(notBombsNum.length === maxChance) {
+                gameContinues = false;
+                alert('hai vinto');
+
+            }
+            
+        }
+
+        console.log(notBombsNum);
+
+   }
+
+
