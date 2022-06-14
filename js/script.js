@@ -13,7 +13,6 @@
 
 // Chiedo al utente attraverso un prompt il livello di difficotà
 const userLevel = prompt('Inserisci un livello (1-2-3)');
-console.log(userLevel);
 
 // Definisco i vari range data dalla consegna 
 let rangeMaxNumber;
@@ -24,8 +23,34 @@ if(userLevel === '1') {
 }else if(userLevel === '3'){
     rangeMaxNumber = 49;
 }
-console.log(rangeMaxNumber);
-// Genero 16 bombe del tutto casuali e li inserisco in una array ma non possono essere duplicati
+
+// Array di bombe
+let bombs = genBombs(16, 1, rangeMaxNumber);
+console.log(bombs); 
+// Genero 16 bombe del tutto casuali e li inserisco in una array ma non possono essere duplicati   
+function genBombs(numElements, rangeMin, rangeMax) {
+
+    const arrayBombs = [];
+    while(arrayBombs.length < numElements) {
+        // Genero i numeri dal min al max in base ai range
+        const bombsElement = randomNumBomb(rangeMin, rangeMax );
+        // Inserisco nel array solo i numeri non preesenti nel array
+        if(!arrayBombs.includes(bombsElement)) {
+            arrayBombs.push(bombsElement);
+            
+            
+        }
+        
+    }
+    return arrayBombs;
+}
+
+
+// Funzione che genera i numeri delle bombe randomiche
+function randomNumBomb(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+  }
+
 
 // Faccio continuare ad inserire un numero al utente finchè non becca una bomba e li inserisco in un array conteneti tutti i numeri che non sono bombe
    // Se becca una bomba faccio terminare il gioco e gli comunico un messaggio che ha perso
